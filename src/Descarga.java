@@ -21,14 +21,18 @@ public class Descarga implements Runnable{
 
     /**
      * Lógica principal del hilo que se ejecuta al llamar a Thread.start().
+     * Este hilo se ejecuta 10 veces, de 10% a cada vez, y se duerme en cada
+     * iteracion por un numero aleatorio de milisegundos, entre 100 y 500.
+     * Cuando el bucle termina, se guarda el tiempo de ejecucion total.
      */
     @Override
     public void run() {
-        int espera = random.nextInt(100, 500);
+        int espera;
         long inicio = System.currentTimeMillis();
         try {
             for (int i = 10; i <= 100; i+= 10) {
                 System.out.println("[" + nombreArchivo + "] " + i + "%");
+                espera = random.nextInt(100, 500);
                 Thread.sleep(espera);
             }
         } catch (InterruptedException e) {
