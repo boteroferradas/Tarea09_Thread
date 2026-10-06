@@ -30,3 +30,23 @@ que no queda registrada dentro de la medición interna de cada hilo.
 
 ![nivel2](capturas/nivel2.png)
 ![nivel2_1](capturas/nivel2_1.png)
+
+
+## Nivel 3
+
+![nivel3](capturas/nivel3.png)
+
+
+## Declaracion de uso de IA
+### Modelo: Gemini
+### Clase Monitor Nivel 2
+![IA1](capturas/IA_1.png)
+
+![IA1_1](capturas/IA1_1.png)
+
+Donde mas la use fue a la hora de plantear el nivel 2, ya que tenia que utilizar la herencia de Thread
+y no sabia muy bien como hacerlo. Utilicé como plantilla lo que me dio para hacer lo que queria exactamente.
+
+### Otros usos
+Le pregunte otras cosas mas menores que no me acordaban del curso pasado de Java, como el como hacer para generar
+un numero aleatorio para el primer nivel de domir los hilos
