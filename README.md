@@ -1,6 +1,6 @@
 # Tarea 09 - Hilos
 
-## Niveles realizados: 1
+## Niveles realizados: 1, 2
 
 ## Nivel 1
 
@@ -25,3 +25,8 @@ al realizarse en paralelo.
 El programa ejecuta los hilos de forma totalmente secuencial, por lo que destruye la concurrencia y 
 el tiempo real se aproxima a la suma, de hecho la supera ligeramente debido a la sobrecarga del sistema
 que no queda registrada dentro de la medición interna de cada hilo.
+
+## Nivel 2
+
+![nivel2](capturas/nivel2.png)
+![nivel2_1](capturas/nivel2_1.png)
