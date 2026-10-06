@@ -1,13 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GestorDescargas {
     static void main(String[] args) {
         List<Descarga> descargas = new ArrayList<>();
         List<Thread> hilos = new ArrayList<>();
+        Scanner teclado = new Scanner(System.in);
+
         long inicio = System.currentTimeMillis();
         long mainTiempoEjecucion = 0;
         long suma = 0;
+
+
+        for (int i = 1; i <= 4; i+= 1) {
+            System.out.println("Introduce nombre de la descarga " + i + ":");
+            String entrada = teclado.nextLine();
+
+        }
 
         Descarga descarga1 = new Descarga("cuarzos.png");
         Thread hilo1 = new Thread(descarga1);
