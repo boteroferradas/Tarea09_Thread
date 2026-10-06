@@ -6,16 +6,26 @@ public class GestorDescargas {
     static void main(String[] args) {
         List<Descarga> descargas = new ArrayList<>();
         List<Thread> hilos = new ArrayList<>();
+        List<String> nombres = new ArrayList<>();
+
         Scanner teclado = new Scanner(System.in);
-        long mainTiempoEjecucion = 0;
+        long mainTiempoEjecucion;
         long suma = 0;
 
 
         for (int i = 1; i <= 4; i+= 1) {
             System.out.println("Introduce nombre de la descarga " + i + ":");
             String entrada = teclado.nextLine();
+            if (!entrada.isBlank()) {
+                nombres.add(entrada);
+            }
+        }
 
-            Descarga descarga = new Descarga(entrada);
+        if (nombres.size() != 4) {
+            nombres = List.of("cuarzos.png", "meditacion.mp4", "mantras.mp3", "horoscopo.pdf");
+        }
+        for (String nombre : nombres) {
+            Descarga descarga = new Descarga(nombre);
             Thread hilo = new Thread(descarga);
 
             descargas.add(descarga);
@@ -27,31 +37,6 @@ public class GestorDescargas {
         for (Thread hilo : hilos) {
             hilo.start();
         }
-
-//        Descarga descarga1 = new Descarga("cuarzos.png");
-//        Thread hilo1 = new Thread(descarga1);
-//        descargas.add(descarga1);
-//        hilos.add(hilo1);
-//
-//        Descarga descarga2 = new Descarga("meditacion.mp4");
-//        Thread hilo2 = new Thread(descarga2);
-//        descargas.add(descarga2);
-//        hilos.add(hilo2);
-//
-//        Descarga descarga3 = new Descarga("mantras.mp3");
-//        Thread hilo3 = new Thread(descarga3);
-//        descargas.add(descarga3);
-//        hilos.add(hilo3);
-//
-//        Descarga descarga4 = new Descarga("horoscopo.pdf");
-//        Thread hilo4 = new Thread(descarga4);
-//        descargas.add(descarga4);
-//        hilos.add(hilo4);
-
-//        hilo1.start();
-//        hilo2.start();
-//        hilo3.start();
-//        hilo4.start();
 
         for (Thread hilo : hilos)
             try {
