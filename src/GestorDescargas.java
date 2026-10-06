@@ -9,7 +9,6 @@ public class GestorDescargas {
         List<Descarga> descargas = new ArrayList<>();
         List<Thread> hilos = new ArrayList<>();
         List<String> nombres = new ArrayList<>();
-        //----------------------------------------------------------------------
 
 
         Scanner teclado = new Scanner(System.in);
@@ -27,7 +26,6 @@ public class GestorDescargas {
         if (nombres.size() != 4) {
             nombres = List.of("cuarzos.png", "meditacion.mp4", "mantras.mp3", "horoscopo.pdf");
         }
-        //----------------------------------------------------------------------
 
         //Bucle que asigna los nombres introducidos con un objeto Descarga, y este se asigna a un objeto Thread.
         //Despues se añaden a sus ArrayLists respectivos para poder operar con ellos
@@ -39,7 +37,6 @@ public class GestorDescargas {
             descargas.add(descarga);
             hilos.add(hilo);
         }
-        //----------------------------------------------------------------------
 
         //Se inicializa el tiempo de ejecución del programa antes de iniciar los hilos (cronometro global)
         long inicio = System.currentTimeMillis();
@@ -48,13 +45,17 @@ public class GestorDescargas {
         for (Thread h : hilos) {
             h.start();
         }
+        //Se instancia un hilo de tipo Monitor y se arranca (comprueba cada 500ms)
         Monitor monitor = new Monitor(hilos, 500);
         monitor.start();
 
+        //Se instancia un hilo de tipo Instalador y se arranca
         Instalador instalador = new Instalador(hilos, "meditacion.mp4", "mantras.mp3");
         Thread hiloInstalador = new Thread(instalador);
         hiloInstalador.start();
 
+        //Esto se encarga de buscar entre la lista de hilos por el que se llame "meditacion.mp4"
+        //Cuando lo encuentra lo hace esperar 3s y si sigue vivo avisa y continua.
         for (Thread h : hilos){
             if (h.getName().equalsIgnoreCase("meditacion.mp4")) {
                 try{
@@ -69,7 +70,7 @@ public class GestorDescargas {
             }
         }
 
-        //Bucle que hace que todos los hilos esperen al terminar
+        //Espera a que la totalidad de los hilos de descarga terminen su trabajo
         for (Thread h : hilos)
             try {
                 h.join();
@@ -77,6 +78,7 @@ public class GestorDescargas {
                 Thread.currentThread().interrupt();
             }
 
+        //Espera a que el monitor y el instalador terminen
         try {
             hiloInstalador.join();
             monitor.join();
@@ -88,6 +90,7 @@ public class GestorDescargas {
         long fin = System.currentTimeMillis();
         mainTiempoEjecucion = fin - inicio;
 
+        //Impresion de los resultados
         System.out.println("...");
         long suma = 0;
         for (Descarga descarga : descargas) {
