@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GestorDescargas {
     static void main(String[] args) {
         //Creación de ArrayLists para guardar los objetos descargas, los hilos y
-        // los nombres pasados por teclado
+        //los nombres pasados por teclado
         List<Descarga> descargas = new ArrayList<>();
         List<Thread> hilos = new ArrayList<>();
         List<String> nombres = new ArrayList<>();
@@ -16,7 +16,7 @@ public class GestorDescargas {
         long mainTiempoEjecucion;
 
         //Bucle que pide nombres para los archivos por teclado, hasta 4. Si alguno no se introduce
-        // pulsando 'ENTER', se usaran por defecto los del nivel 1
+        //pulsando 'ENTER', se usaran por defecto los del nivel 1
         for (int i = 1; i <= 4; i+= 1) {
             System.out.println("Introduce nombre de la descarga " + i + ":");
             String entrada = teclado.nextLine();
@@ -47,6 +47,8 @@ public class GestorDescargas {
         for (Thread hilo : hilos) {
             hilo.start();
         }
+        Monitor monitor = new Monitor(hilos, 500);
+        monitor.start();
 
         //Bucle que hace que todos los hilos esperen al terminar
         for (Thread hilo : hilos)
@@ -55,6 +57,12 @@ public class GestorDescargas {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+
+        try {
+            monitor.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         //Fin del tiempo de ejecucion del programa
         long fin = System.currentTimeMillis();
