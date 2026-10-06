@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GestorDescargas {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         //Creación de ArrayLists para guardar los objetos descargas, los hilos y
         //los nombres pasados por teclado
         List<Descarga> descargas = new ArrayList<>();
@@ -34,6 +34,7 @@ public class GestorDescargas {
         for (String nombre : nombres) {
             Descarga descarga = new Descarga(nombre);
             Thread hilo = new Thread(descarga);
+            hilo.setName(nombre);
 
             descargas.add(descarga);
             hilos.add(hilo);
@@ -44,21 +45,40 @@ public class GestorDescargas {
         long inicio = System.currentTimeMillis();
 
         //Arranque de los hilos
-        for (Thread hilo : hilos) {
-            hilo.start();
+        for (Thread h : hilos) {
+            h.start();
         }
         Monitor monitor = new Monitor(hilos, 500);
         monitor.start();
 
+        Instalador instalador = new Instalador(hilos, "meditacion.mp4", "mantras.mp3");
+        Thread hiloInstalador = new Thread(instalador);
+        hiloInstalador.start();
+
+        for (Thread h : hilos){
+            if (h.getName().equalsIgnoreCase("meditacion.mp4")) {
+                try{
+                    h.join(3000);
+                    if (h.isAlive()) {
+                        System.out.println("[Main] " + h.getName() + " sigue en segundo plano");
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                break;
+            }
+        }
+
         //Bucle que hace que todos los hilos esperen al terminar
-        for (Thread hilo : hilos)
+        for (Thread h : hilos)
             try {
-                hilo.join();
+                h.join();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
         try {
+            hiloInstalador.join();
             monitor.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
